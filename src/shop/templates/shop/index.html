@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+    <meta name="author" content="Clément Lazzarini">
+
+    <title>Shop</title>
+    <meta name="description" content="Page d'accueil">
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}"><h1>Mon E-Shop</h1></a>
+
+        <div class="connect-container">
+            {% if user.is_authenticated %}
+                <p>Bonjour <span>{{ user.username }}</span> !</p>
+                <a href="{% url 'logout' %}">Déconnexion</a>
+            {% else %}
+                <a href="{% url 'login' %}">Connexion</a>
+                <a href="{% url 'signup' %}">S'inscrire</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <h2>Liste des produits</h2>
+
+    <div class="product-container">
+        {% for product in products %}
+        <div class="product">
+            <h3>{{ product.name }}</h3>
+            {% if product.thumbnail %}
+                <img src="{{ product.thumbnail.url }}" alt="{{ product.name }}">
+            {% endif %}
+            <p class="price">{{ product.price|floatformat:2 }} €</p>
+            <a href="#">Acheter</a>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

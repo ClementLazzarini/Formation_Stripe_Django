@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+    <meta name="author" content="Clément Lazzarini">
+
+    <title>Connexion</title>
+    <meta name="description" content="Page d'accueil">
+</head>
+<body>
+    <nav>
+        <a href="{% url 'home' %}"><h1>Mon E-Shop</h1></a>
+
+        <div class="connect-container">
+            {% if user.is_authenticated %}
+                <p>Bonjour <span>{{ user.username }}</span> !</p>
+                <a href="{% url 'logout' %}">Déconnexion</a>
+            {% else %}
+                <a href="{% url 'login' %}">Connexion</a>
+                <a href="{% url 'signup' %}">S'inscrire</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <h2>Connexion</h2>
+
+    <form method="POST">
+      {% csrf_token %}
+      <input id="username" type="text" name="username" placeholder="Pseudo">
+        <input id="password" type="password" name="password" placeholder="Mot de passe">
+        <p>{{ error_message }}</p>
+        <button type="submit" class="btn-paiement">Connexion</button>
+        <a href="{% url 'signup' %}">S'inscrire ?</a>
+    </form>
+</body>
+</html>
